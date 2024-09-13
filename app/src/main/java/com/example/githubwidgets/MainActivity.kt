@@ -1,27 +1,29 @@
 package com.example.githubwidgets
 
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Button
-import androidx.compose.material3.ChipColors
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,11 +32,9 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -45,50 +45,50 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.githubwidgets.ui.theme.GitHubWidgetsTheme
+import com.example.githubwidgets.widgets.BasicStatsWidgetReceiver
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             GitHubWidgetsTheme {
-                HomeActivity()
+                HomeActivity(context = this)
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(name: String) {
     Text(
         text = name,
         modifier = Modifier,
         style = MaterialTheme.typography.titleLarge,
         color = MaterialTheme.colorScheme.primary,
-        fontFamily = FontFamily.Monospace
     )
 }
 
-@Composable
-fun Header(name: String, modifier: Modifier = Modifier) {
-    Row(modifier = Modifier.padding(4.dp)) {
-        Greeting(name)
 
+fun addWidget(context: Context) {
+    val appWidgetManager = AppWidgetManager.getInstance(context)
+    val myProvider = ComponentName(context, BasicStatsWidgetReceiver::class.java)
+
+    if (appWidgetManager.isRequestPinAppWidgetSupported) {
+        appWidgetManager.requestPinAppWidget(myProvider, null, null)
+    } else {
+        Toast.makeText(context, "Request Pin App Widget not supported", Toast.LENGTH_SHORT).show()
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeActivity() {
+fun HomeActivity(context: Context) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -104,8 +104,7 @@ fun HomeActivity() {
             TopAppBar(title = { Greeting("amkhrjee") }, navigationIcon = {
                 IconButton({ scope.launch { drawerState.apply { if (isClosed) open() else close() } } }) {
                     Icon(
-                        Icons.Rounded.Person,
-                        contentDescription = "Avatar"
+                        Icons.Rounded.Person, contentDescription = "Avatar"
                     )
                 }
             }, actions = {
@@ -128,9 +127,7 @@ fun HomeActivity() {
                 }
             })
         }) { contentPadding ->
-            val size = 4.dp
             val buttonHorizontalPadding = 8.dp
-            Log.d("ContentPadding", contentPadding.toString())
             if (showBottomSheet) {
                 ModalBottomSheet(
                     onDismissRequest = {
@@ -190,15 +187,13 @@ fun HomeActivity() {
                     Spacer(Modifier.padding(vertical = 8.dp))
                 }
             }
+
+//            Test Button
+            Column(Modifier.padding(contentPadding)) {
+                Button({
+                    addWidget(context)
+                }) { Text("Pin Widget") }
+            }
         }
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GitHubWidgetsTheme {
-        HomeActivity()
     }
 }

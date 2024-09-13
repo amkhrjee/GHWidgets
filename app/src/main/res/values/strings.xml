@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">GitHubWidgets</string>
+    <string name="app_name">GH Widgets</string>
+    <string name="example_appwidget_description">Test Widget</string>
+    <string name="basic_stats_widget_description">Basic Stats Widget</string>
 </resources>
