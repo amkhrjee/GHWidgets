@@ -1,8 +1,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#9be9a8" /> <!-- Fill with red color -->
+<!--    <solid android:color="#fff" /> &lt;!&ndash; Fill with red color &ndash;&gt;-->
     <corners android:radius="1.6dp"/>  <!-- Optional: rounded corners -->
     <size
-        android:width="16dp"
-        android:height="16dp"/> <!-- Size of the rectangle -->
+        android:width="12dp"
+        android:height="12dp"/>  <!-- Size of the rectangle -->
 </shape>

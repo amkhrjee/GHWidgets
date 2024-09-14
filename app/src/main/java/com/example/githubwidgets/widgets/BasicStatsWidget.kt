@@ -1,9 +1,11 @@
 package com.example.githubwidgets.widgets
 
 import android.content.Context
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -24,6 +26,7 @@ import androidx.glance.layout.size
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
 import com.example.githubwidgets.R
 
 class BasicStatsWidget : GlanceAppWidget() {
@@ -52,29 +55,27 @@ class BasicStatsWidget : GlanceAppWidget() {
             }
 
             @Composable
-            fun DrawContributionDots() {
-                val drawableList = listOf(
-                    R.drawable.contribution_dot_1,
-                    R.drawable.contribution_dot_2,
-                    R.drawable.contribution_dot_3,
-                    R.drawable.contribution_dot_4
+            fun DrawContributionDots(weeks: Int) {
+                val primaryPalette = MaterialTheme.colorScheme.primary
+                val colors = listOf(
+                    primaryPalette,
+                    primaryPalette.copy(alpha = 0.90f),
+                    primaryPalette.copy(alpha = 0.80f),
+                    primaryPalette.copy(alpha = 0.70f),
+                    primaryPalette.copy(alpha = 0.60f),
                 )
+
                 Column(GlanceModifier.fillMaxHeight()) {
                     repeat(7) {
-                        Row(GlanceModifier.fillMaxWidth()) {
-                            repeat(1) {
-                                val randomDrawable = drawableList.random()
+                        Row() {
+                            repeat(weeks) {
                                 Image(
-                                    provider = ImageProvider(randomDrawable),
-                                    contentDescription = null
+                                    provider = ImageProvider(R.drawable.contribution_dot),
+                                    contentDescription = null,
+                                    modifier = GlanceModifier.padding(4.dp),
+                                    colorFilter = ColorFilter.tint(ColorProvider(colors.random()))
                                 )
-                                if (it < 19) {
-                                    Spacer(GlanceModifier.size(4.dp))
-                                }
                             }
-                        }
-                        if (it < 6) {
-                            Spacer(GlanceModifier.size(4.dp))
                         }
                     }
                 }
@@ -94,23 +95,23 @@ class BasicStatsWidget : GlanceAppWidget() {
                         Spacer(GlanceModifier.size(8.dp))
                         Column {
                             Text(
-                                "Aniruddha Mukherjee", style = TextStyle(
+                                "John Doe", style = TextStyle(
                                     color = GlanceTheme.colors.primary,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 20.sp
                                 )
                             )
                             Text(
-                                "amkhrjee", style = TextStyle(
+                                "john_doe", style = TextStyle(
                                     color = GlanceTheme.colors.secondary,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 16.sp,
+                                    fontSize = 12.sp,
                                     fontFamily = androidx.glance.text.FontFamily.Monospace
                                 )
                             )
                         }
                     }
-                    Spacer(GlanceModifier.size(4.dp))
+                    Spacer(GlanceModifier.size(6.dp))
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = GlanceModifier.fillMaxWidth()
@@ -123,7 +124,8 @@ class BasicStatsWidget : GlanceAppWidget() {
                             StatColumn("1.2K", "Stars")
                         }
                         Spacer(GlanceModifier.size(4.dp))
-                        DrawContributionDots()
+                        DrawContributionDots(10)
+                        DrawContributionDots(2)
                     }
                 }
             }

@@ -189,10 +189,14 @@ fun HomeActivity(context: Context) {
             }
 
 //            Test Button
+
             Column(Modifier.padding(contentPadding)) {
+                Text("Your Widgets", style = MaterialTheme.typography.titleMedium)
+                Spacer(Modifier.size(6.dp))
                 Button({
                     addWidget(context)
                 }) { Text("Pin Widget") }
+
             }
         }
     }
