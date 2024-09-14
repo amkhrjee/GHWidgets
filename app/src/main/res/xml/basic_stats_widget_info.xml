@@ -6,5 +6,6 @@
     android:description="@string/basic_stats_widget_description"
     android:initialLayout="@layout/glance_default_loading_layout"
     android:updatePeriodMillis="60000"
+    android:previewImage="@drawable/basic_stats_widget"
     >
 </appwidget-provider>
