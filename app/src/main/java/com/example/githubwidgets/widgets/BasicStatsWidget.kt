@@ -1,7 +1,6 @@
 package com.example.githubwidgets.widgets
 
 import android.content.Context
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,25 +55,26 @@ class BasicStatsWidget : GlanceAppWidget() {
 
             @Composable
             fun DrawContributionDots(weeks: Int) {
-                val primaryPalette = MaterialTheme.colorScheme.primary
+                val primaryPalette = GlanceTheme.colors.primary.getColor(context)
                 val colors = listOf(
                     primaryPalette,
-                    primaryPalette.copy(alpha = 0.90f),
                     primaryPalette.copy(alpha = 0.80f),
-                    primaryPalette.copy(alpha = 0.70f),
                     primaryPalette.copy(alpha = 0.60f),
+                    primaryPalette.copy(alpha = 0.50f),
+                    primaryPalette.copy(alpha = 0.40f),
                 )
-
-                Column(GlanceModifier.fillMaxHeight()) {
-                    repeat(7) {
-                        Row() {
-                            repeat(weeks) {
-                                Image(
-                                    provider = ImageProvider(R.drawable.contribution_dot),
-                                    contentDescription = null,
-                                    modifier = GlanceModifier.padding(4.dp),
-                                    colorFilter = ColorFilter.tint(ColorProvider(colors.random()))
-                                )
+                GlanceTheme {
+                    Column(GlanceModifier.fillMaxHeight()) {
+                        repeat(7) {
+                            Row() {
+                                repeat(weeks) {
+                                    Image(
+                                        provider = ImageProvider(R.drawable.contribution_dot),
+                                        contentDescription = null,
+                                        modifier = GlanceModifier.padding(4.dp),
+                                        colorFilter = ColorFilter.tint(ColorProvider(colors.random()))
+                                    )
+                                }
                             }
                         }
                     }
