@@ -1,27 +1,28 @@
 package com.example.githubwidgets
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -45,6 +46,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendModeColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.githubwidgets.ui.theme.GitHubWidgetsTheme
@@ -79,6 +83,7 @@ fun addWidget(context: Context) {
     val myProvider = ComponentName(context, BasicStatsWidgetReceiver::class.java)
 
     if (appWidgetManager.isRequestPinAppWidgetSupported) {
+
         appWidgetManager.requestPinAppWidget(myProvider, null, null)
     } else {
         Toast.makeText(context, "Request Pin App Widget not supported", Toast.LENGTH_SHORT).show()
@@ -191,12 +196,42 @@ fun HomeActivity(context: Context) {
 //            Test Button
 
             Column(Modifier.padding(contentPadding)) {
-                Text("Your Widgets", style = MaterialTheme.typography.titleMedium)
-                Spacer(Modifier.size(6.dp))
-                Button({
-                    addWidget(context)
-                }) { Text("Pin Widget") }
-
+//                Text("Your Widgets", style = MaterialTheme.typography.titleMedium)
+//                Spacer(Modifier.size(6.dp))
+//                Button({
+//                    addWidget(context)
+//                }) { Text("Pin Widget") }
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    ),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                ) {
+                    Column(Modifier.padding(8.dp)) {
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                "Basic Stats Widget",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                            Button({addWidget(context)}) {
+                                Text("Add")
+                            }
+                        }
+                        Spacer(Modifier.size(8.dp))
+                        Image(
+                            painter = painterResource(R.drawable.basic_stats_widget),
+                            contentDescription = "Basic Stats Widget",
+                            modifier = Modifier.clip(RoundedCornerShape(16.dp))
+                        )
+                    }
+                }
             }
         }
     }
