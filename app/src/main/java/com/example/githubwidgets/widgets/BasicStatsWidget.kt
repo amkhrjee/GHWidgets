@@ -2,6 +2,7 @@ package com.example.githubwidgets.widgets
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.ColorFilter
@@ -71,7 +72,7 @@ class BasicStatsWidget : GlanceAppWidget() {
                                     Image(
                                         provider = ImageProvider(R.drawable.contribution_dot),
                                         contentDescription = null,
-                                        modifier = GlanceModifier.padding(4.dp),
+                                        modifier = GlanceModifier.padding(3.dp),
                                         colorFilter = ColorFilter.tint(ColorProvider(colors.random()))
                                     )
                                 }
@@ -114,7 +115,7 @@ class BasicStatsWidget : GlanceAppWidget() {
                     Spacer(GlanceModifier.size(6.dp))
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = GlanceModifier.fillMaxWidth()
+                        modifier = GlanceModifier.fillMaxWidth(),
                     ) {
                         Column(
                             verticalAlignment = Alignment.CenterVertically,
@@ -125,7 +126,7 @@ class BasicStatsWidget : GlanceAppWidget() {
                         }
                         Spacer(GlanceModifier.size(4.dp))
                         DrawContributionDots(10)
-                        DrawContributionDots(2)
+                        DrawContributionDots(3)
                     }
                 }
             }
