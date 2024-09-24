@@ -361,13 +361,19 @@ fun LoginScreen(context: Context) {
                 modifier = Modifier.clip(RoundedCornerShape(16.dp))
             )
             Spacer(Modifier.size(80.dp))
-            Text(
-                "Beautiful GitHub Widgets for your Home Screen",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold,
+//            Text(
+//                "Beautiful GitHub Widgets for your Home Screen",
+//                textAlign = TextAlign.Center,
+//                style = MaterialTheme.typography.titleLarge,
+//                modifier = Modifier.padding(horizontal = 16.dp),
+//                color = MaterialTheme.colorScheme.primary,
+//                fontWeight = FontWeight.Bold,
+//            )
+            Image(
+                painter = painterResource(R.drawable.tag),
+                contentDescription = "tagline",
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary  ),
+                modifier = Modifier.scale(0.85f)
             )
             Spacer(Modifier.size(60.dp))
             Button(modifier = Modifier.scale(1.2f), onClick = {
@@ -389,18 +395,6 @@ fun LoginScreen(context: Context) {
                     Spacer(Modifier.size(8.dp))
                     Text("Login with GitHub", fontWeight = FontWeight.SemiBold)
                 }
-            }
-        }
-        Box(Modifier.fillMaxSize()) {
-            Column(Modifier.align(Alignment.BottomCenter)) {
-                Image(
-                    painterResource(R.drawable.falling_leaves),
-                    contentDescription = "Plant",
-                    modifier = Modifier.size(48.dp),
-
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
-                )
-                Spacer(Modifier.size(52.dp))
             }
         }
     }
